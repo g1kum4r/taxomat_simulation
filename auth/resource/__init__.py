@@ -1,0 +1,1 @@
+from auth.resource.user import UserResource

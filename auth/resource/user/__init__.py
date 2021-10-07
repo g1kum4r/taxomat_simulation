@@ -1,0 +1,1 @@
+from auth.resource.user.use_cr import UserResource
