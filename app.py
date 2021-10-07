@@ -11,8 +11,9 @@ db = SQLAlchemy(app)
 
 db.drop_all()
 db.create_all()
-from auth.resource import UserResource
-api.add_resource(UserResource, '/users')
+from auth.resource import UserListResource, UserResource
+api.add_resource(UserListResource, '/users')
+api.add_resource(UserResource, '/users/<int:id>')
 
 if __name__ == '__main__':
     app.run(debug=True)

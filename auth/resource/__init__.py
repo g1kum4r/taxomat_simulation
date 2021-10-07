@@ -1,1 +1,1 @@
-from auth.resource.user import UserResource
+from auth.resource.user import UserListResource, UserResource

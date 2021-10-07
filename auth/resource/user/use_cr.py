@@ -7,7 +7,8 @@ from auth.resource.user.post_args import user_post_args
 from __main__ import db
 
 
-class UserResource(Resource):
+# to fetch, filter and save user
+class UserListResource(Resource):
 
     @marshal_with(user_marshal)
     def get(self):
