@@ -1,7 +1,7 @@
 from flask_restful import fields
 
 user_marshal = {
-    "id": fields.Integer,
+    "_id": fields.String,
     "email": fields.String,
     "password": fields.String,
     "firstName": fields.String,
