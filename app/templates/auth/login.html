@@ -1,0 +1,49 @@
+{% extends "auth_template.html" %}
+{% block content %}
+    <form method="POST" class="my-3">
+        {{  form.hidden_tag() }}
+        <div class="mb-3">
+            <div class="form-group">
+                {{ form.email.label(class='form-label') }}
+                {{ form.email(class='form-control', tabindex='1') }}
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {% for error in form.email.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        {{ form.password.label(class='form-label') }}
+                    </div>
+                    <div class="col ml-auto">
+                        <a class="float-end" tabindex="5" href="{{ url_for('auth.forget_password') }}">Forget Password</a>
+                    </div>
+                </div>
+                {{ form.password(class='form-control', tabindex='2') }}
+                {% if form.password.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="form-group mb-2">
+            {{ form.remember_me() }}
+            {{ form.remember_me.label(class='form-label', tabindex='3') }}
+        </div>
+        <div class="form-group d-grid">
+            {{ form.submit(class='btn btn-primary', tabindex='4') }}
+        </div>
+    </form>
+    <p class="text-muted">Don't have an account? <a href="{{ url_for('auth.register') }}" tabindex="6">Register now</a></p>
+{% endblock %}
