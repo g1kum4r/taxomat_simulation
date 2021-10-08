@@ -15,8 +15,11 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = UserModel(mongo.db.users.find_one({"_id": ObjectId(user_id)}))
-    return user
+    _user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    if _user is not None:
+        user = UserModel(mongo.db.users.find_one({"_id": ObjectId(user_id)}))
+        return user
+    return None
 
 
 @bp.route('/login', methods=['GET', 'POST'])
