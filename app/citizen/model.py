@@ -1,7 +1,15 @@
+from flask_wtf import FlaskForm
 from pymongo import ASCENDING
-from pymongo.errors import BulkWriteError
+from wtforms import SubmitField
+from wtforms.fields.html5 import IntegerField
 
 from app import mongo
+
+
+class CitizenGenerateForm(FlaskForm):
+    start_from_cnic = IntegerField('Start from CNIC')
+    range = IntegerField('Range')
+    submit = SubmitField('Generate')
 
 
 class CitizenModel:

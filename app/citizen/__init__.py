@@ -1,17 +1,8 @@
 from flask import request, flash, render_template, Blueprint
 from flask_login import login_required
-from flask_wtf import FlaskForm
 from pymongo.errors import BulkWriteError
-from wtforms import SubmitField
-from wtforms.fields.html5 import IntegerField
-from app.citizen.model import citizens_list, generate_list
 
-
-class CitizenGenerateForm(FlaskForm):
-    start_from_cnic = IntegerField('Start from CNIC')
-    range = IntegerField('Range')
-    submit = SubmitField('Generate')
-
+from app.citizen.model import citizens_list, generate_list, CitizenGenerateForm
 
 bp = Blueprint('citizens', __name__, url_prefix='/citizens')
 
