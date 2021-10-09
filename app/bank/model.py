@@ -18,8 +18,8 @@ def banks_list(offset=0, limit=0):
     }
 
 
-def save_bank(name: str, code: str, id: ObjectId = None):
-    if id is None:
+def save_bank(name: str, code: str, _id: ObjectId = None):
+    if _id is None:
         print('create new')
         return mongo.db.banks.insert_one({
             'name': name,
@@ -27,7 +27,7 @@ def save_bank(name: str, code: str, id: ObjectId = None):
         })
     else:
         print('update')
-        return mongo.db.banks.find_one_and_update({"_id": id}, {'$set': {
+        return mongo.db.banks.find_one_and_update({"_id": _id}, {'$set': {
             "name": name,
             "code": code
         }})

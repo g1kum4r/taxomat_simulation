@@ -10,7 +10,7 @@ bp = Blueprint('banks', __name__, url_prefix='/banks')
 
 @bp.route('', methods=['GET'])
 @login_required
-def list():
+def get_list():
     args = request.args
     limit = args.get('limit', type=int, default=20)
     page = args.get('page', type=int, default=1)
@@ -35,46 +35,44 @@ def list():
 
 
 @bp.route('/form', methods=['GET', 'POST'])
-@bp.route('/form/<string:id>', methods=['GET', 'POST'])
+@bp.route('/form/<string:_id>', methods=['GET', 'POST'])
 @login_required
-def form(id: str = None):
-    form = BankForm()
+def form(_id: str = None):
+    _form = BankForm()
 
-    if id is None:
+    if _id is None:
         title = 'Add Bank'
     else:
         title = 'Edit Bank'
-        bank = get_bank(ObjectId(id))
+        bank = get_bank(ObjectId(_id))
         print(f'bank: {bank}')
         if bank is not None:
-            if not form.is_submitted():
-                form.name.data = bank.get('name')
-                form.code.data = bank.get('code')
+            if not _form.is_submitted():
+                _form.name.data = bank.get('name')
+                _form.code.data = bank.get('code')
         else:
-            flash(f'bank not found by id {id}', 'danger')
+            flash(f'bank not found by _id {_id}', 'danger')
 
-    if form.validate_on_submit():
-        result = save_bank(form.name.data, form.code.data, ObjectId(id) if id is not None else None)
+    if _form.validate_on_submit():
+        result = save_bank(_form.name.data, _form.code.data, ObjectId(_id) if _id is not None else None)
         if result is not None:
-            flash(f'{form.name.data} Saved', 'success')
-            return redirect(url_for('banks.list'))
+            flash(f'{_form.name.data} Saved', 'success')
+            return redirect(url_for('banks.get_list'))
 
-    return render_template('dashboard/banks_form.html', title=title, form=form)
+    return render_template('dashboard/banks_form.html', title=title, form=_form)
 
 
-@bp.route('/delete/<string:id>', methods=['GET'])
+@bp.route('/delete/<string:_id>', methods=['GET'])
 @login_required
-def delete(id: str = None):
-    bank = get_bank(ObjectId(id))
+def delete(_id: str = None):
+    bank = get_bank(ObjectId(_id))
     if bank is None:
-        flash(f'bank not found by id: {id}', 'danger')
+        flash(f'bank not found by _id: {_id}', 'danger')
     else:
-        result = delete_bank(ObjectId(id))
+        result = delete_bank(ObjectId(_id))
         if result is None:
-            flash(f'unknown result from mongodb {id}', 'danger')
+            flash(f'unknown result from mongodb {_id}', 'danger')
         else:
             flash(f'{bank.get("name")} deleted', 'success')
 
-    return redirect(url_for('banks.list'))
-
-
+    return redirect(url_for('banks.get_list'))

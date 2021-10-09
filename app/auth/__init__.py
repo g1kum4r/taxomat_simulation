@@ -1,11 +1,11 @@
-from __main__ import mongo, login_manager, bcrypt
+from app import mongo, login_manager, bcrypt
 
 from bson import ObjectId
 
 from app.auth.forms import LoginForm, RegisterForm, PasswordForget, PasswordReset
 
 from flask import Blueprint, render_template, flash, url_for, request
-from flask_login import login_user, current_user,  logout_user
+from flask_login import login_user, current_user, logout_user
 from werkzeug.utils import redirect
 
 from app.auth.model import UserModel
@@ -61,7 +61,7 @@ def register():
     if form.validate_on_submit():
         email = form.email.data
         password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        inserted_id = mongo.db.users.insert({
+        mongo.db.users.insert({
             'email': email,
             'password': password
         })
@@ -86,6 +86,7 @@ def reset_password(token):
         flash(f'Password reset. Login with your new password.', 'success')
         return redirect(url_for('auth.login'))
     return render_template("auth/password_reset.html", title='Reset Password', form=form)
+
 
 @bp.route('/logout')
 def logout():

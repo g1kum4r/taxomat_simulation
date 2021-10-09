@@ -6,6 +6,6 @@ bp = Blueprint('fuel_stations', __name__, url_prefix='/fuel_stations')
 
 @bp.route('')
 @login_required
-def list():
+def get_list():
     return render_template('dashboard/fuel_stations.html', title='Fuel Stations')
 

@@ -16,10 +16,10 @@
         {% if data.count > 0 %}
             <nav class="float-end">
               <ul class="pagination">
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=1) }}">First</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=page-1) }}">Previous</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=page+1) }}">Next</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=(data.count//20)) }}">Last</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=(data.count//20)) }}">Last</a></li>
               </ul>
             </nav>
         {% endif %}
@@ -41,8 +41,8 @@
                     <td>{{d.code}}</td>
                     <td class="">
                         <div class="d-flex gap-2 float-end">
-                            <a class="btn btn-outline-danger" href="{{ url_for('electricity_provider_companies.delete', id=d._id) }}">delete</a>
-                            <a class="btn btn-outline-dark" href="{{ url_for('electricity_provider_companies.form', id=d._id) }}">edit</a>
+                            <a class="btn btn-outline-danger" href="{{ url_for('electricity_provider_companies.delete', _id=d._id) }}">delete</a>
+                            <a class="btn btn-outline-dark" href="{{ url_for('electricity_provider_companies.form', _id=d._id) }}">edit</a>
                         </div>
                     </td>
                 </tr>
@@ -59,10 +59,10 @@
         {% if data.count > 0 %}
             <nav class="float-end">
               <ul class="pagination">
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=1) }}">First</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=page-1) }}">Previous</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=page+1) }}">Next</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.list', page=(data.count//20)) }}">Last</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('electricity_provider_companies.get_list', page=(data.count//20)) }}">Last</a></li>
               </ul>
             </nav>
         {% endif %}

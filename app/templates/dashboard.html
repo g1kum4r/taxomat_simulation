@@ -10,22 +10,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('citizens.list') }}" href="{{url_for('citizens.list')}}">Citizen</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('citizens.get_list') }}" href="{{url_for('citizens.get_list')}}">Citizen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('banks.list') }}" href="{{url_for('banks.list')}}">Banks</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('banks.get_list') }}" href="{{url_for('banks.get_list')}}">Banks</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.list') }}" href="{{url_for('excise.list')}}">Excise</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.get_list') }}" href="{{url_for('excise.get_list')}}">Excise</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('electricity_provider_companies.list') }}" href="{{url_for('electricity_provider_companies.list')}}">Electricity Provider Companies</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('electricity_provider_companies.get_list') }}" href="{{url_for('electricity_provider_companies.get_list')}}">Electricity Provider Companies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('sui_gas_provider_companies.list') }}" href="{{url_for('sui_gas_provider_companies.list')}}">SUI Gas Provider Companies</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('sui_gas_provider_companies.get_list') }}" href="{{url_for('sui_gas_provider_companies.get_list')}}">SUI Gas Provider Companies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.list') }}" href="{{url_for('fuel_stations.list')}}">Fuel Stations</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.get_list') }}" href="{{url_for('fuel_stations.get_list')}}">Fuel Stations</a>
                     </li>
                 </ul>
                 {% if current_user.is_authenticated %}
