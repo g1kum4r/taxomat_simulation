@@ -1,7 +1,7 @@
 {% extends 'main.html'%}
 {% block body %}
-<body class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body class="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -10,33 +10,33 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('citizens.list')}}">Citizen</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('citizens.list') }}" href="{{url_for('citizens.list')}}">Citizen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('banks.list')}}">Banks</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('banks.list') }}" href="{{url_for('banks.list')}}">Banks</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('excise.list')}}">Excise</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.list') }}" href="{{url_for('excise.list')}}">Excise</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('electricity_provider_companies.list')}}">Electricity Provider Companies</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('electricity_provider_companies.list') }}" href="{{url_for('electricity_provider_companies.list')}}">Electricity Provider Companies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('sui_gas_provider_companies.list')}}">SUI Gas Provider Companies</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('sui_gas_provider_companies.list') }}" href="{{url_for('sui_gas_provider_companies.list')}}">SUI Gas Provider Companies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('fuel_stations.list')}}">Fuel Stations</a>
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.list') }}" href="{{url_for('fuel_stations.list')}}">Fuel Stations</a>
                     </li>
                 </ul>
                 {% if current_user.is_authenticated %}
-                    <a class="btn btn-primary mx-md-2 my-sm-2" href="{{ url_for('profile.page') }}">{{ current_user.get_username() }}</a>
+                    <a class="btn btn-outline-light mx-md-2 my-sm-2" href="{{ url_for('profile.page') }}">{{ current_user.get_username() }}</a>
                 {% endif %}
             </div>
-            <a class="btn btn-outline-secondary" href="{{ url_for('auth.logout') }}">Logout</a>
+            <a class="btn btn-dark" href="{{ url_for('auth.logout') }}">Logout</a>
 
         </div>
     </nav>
-    <div class="col mx-auto">
+    <div class="container-fluid">
         <div class="row p-2">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -49,11 +49,9 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <div class="row">
-            {% block content %}
-                <h2>Dasbhoard</h2>
-            {% endblock %}
-        </div>
+        {% block content %}
+            <h2>Dasbhoard</h2>
+        {% endblock %}
     </div>
 </body>
 {% endblock body %}

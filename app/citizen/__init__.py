@@ -1,17 +1,14 @@
-from flask import request, flash, render_template, Blueprint
+import random
+
+from bson import ObjectId
+from flask import request, flash, render_template, Blueprint, url_for
 from flask_login import login_required
-from flask_wtf import FlaskForm
 from pymongo.errors import BulkWriteError
-from wtforms import SubmitField
-from wtforms.fields.html5 import IntegerField
-from app.citizen.model import citizens_list, generate_list
+from werkzeug.utils import redirect
 
-
-class CitizenGenerateForm(FlaskForm):
-    start_from_cnic = IntegerField('Start from CNIC')
-    range = IntegerField('Range')
-    submit = SubmitField('Generate')
-
+from app.bank import get_bank
+from app.citizen.model import citizens_list, generate_list, CitizenGenerateForm, get_citizen, BankAccountForm, \
+    UtilityAccountForm, IncomeTaxForm, add_citizen_bank_accounts
 
 bp = Blueprint('citizens', __name__, url_prefix='/citizens')
 
@@ -40,3 +37,65 @@ def list():
 
     data = citizens_list(offset, limit)
     return render_template('dashboard/citizens.html', title='Citizens', data=data, form=form, page=page)
+
+
+@bp.route('/<string:_id>', methods=['GET'])
+@login_required
+def get(_id: str):
+    baf = BankAccountForm()
+    baf.iban.data = random.randint(10000000000000, 99999999999999)
+    uaf = UtilityAccountForm()
+    uaf.consumer_no.data = random.randint(1000000, 9999999)
+    itf = IncomeTaxForm()
+    citizen = get_citizen(ObjectId(_id))
+    if citizen is None:
+        flash(f'citizen not found by id: {_id}', 'danger')
+        return redirect(url_for('citizens.list'))
+    return render_template('dashboard/citizen_profile.html', title=citizen.get('cnic'),
+                           data=citizen, baf=baf, uaf=uaf, itf=itf)
+
+
+@bp.route('/add_bank_account/<string:_id>', methods=['POST'])
+@login_required
+def add_bank_account(_id: str):
+    baf = BankAccountForm(request.form)
+    print(f'add_bank_account: {baf}')
+    citizen: dict = get_citizen(ObjectId(_id))
+    if citizen is None:
+        flash(f'citizen not found by id: {_id}', 'danger')
+        return redirect(url_for('citizens.list'))
+
+    if baf.is_submitted():
+        bank = get_bank(ObjectId(baf.bank_id.data))
+        if bank is None:
+            flash(f'bank not exist by id {baf.bank_id.data}', 'danger')
+        else:
+            if baf.iban.data is None:
+                baf.iban.data = random.randint(10000000000000, 99999999999999)
+            bank.update({'iban': baf.iban.data})
+            bank_accounts = citizen.get('bank_accounts')
+            bank_accounts.append(bank)
+            add_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
+    else:
+        print('not submitted')
+
+    return redirect(url_for('citizens.get', _id=_id))
+
+
+@bp.route('/remove_bank_account/<string:_id>', methods=['GET'])
+@login_required
+def remove_bank_account(_id: str):
+    iban = request.args.get('iban', type=str)
+    # print(f'iban: {iban} {type(iban)}')
+    citizen: dict = get_citizen(ObjectId(_id))
+    if citizen is None:
+        flash(f'citizen not found by id: {_id}', 'danger')
+        return redirect(url_for('citizens.list'))
+
+    bank_accounts = citizen.get('bank_accounts')
+    # print(f'ba: {bank_accounts}')
+    bank_accounts = [b for b in bank_accounts if str(b.get('iban')) != iban]
+    # print(f'ba: {bank_accounts}')
+    add_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
+
+    return redirect(url_for('citizens.get', _id=_id))
