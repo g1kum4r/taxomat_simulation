@@ -62,7 +62,9 @@
             <tbody>
                 {% for d in data.list %}
                 <tr>
-                    <td>{{d.cnic}}</td>
+                    <td>
+                        <a class="text-decoration-none" href="{{ url_for('citizens.get', _id=d._id) }}">{{d.cnic}}</a>
+                    </td>
                     <td>{{d.ntn}}</td>
                 </tr>
                 {% endfor %}

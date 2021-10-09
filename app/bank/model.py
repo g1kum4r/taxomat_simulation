@@ -33,8 +33,8 @@ def save_bank(name: str, code: str, id: ObjectId = None):
         }})
 
 
-def get_bank(id: ObjectId):
-    return mongo.db.banks.find_one({"_id": id})
+def get_bank(_id: ObjectId):
+    return mongo.db.banks.find_one({"_id": _id})
 
 
 def delete_bank(id: ObjectId):
