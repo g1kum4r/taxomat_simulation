@@ -15,7 +15,7 @@ bp = Blueprint('citizens', __name__, url_prefix='/citizens')
 
 @bp.route('', methods=['GET', 'POST'])
 @login_required
-def list():
+def get_list():
     args = request.args
     limit = args.get('limit', type=int, default=20)
     page = args.get('page', type=int, default=1)
@@ -50,7 +50,7 @@ def get(_id: str):
     citizen = get_citizen(ObjectId(_id))
     if citizen is None:
         flash(f'citizen not found by id: {_id}', 'danger')
-        return redirect(url_for('citizens.list'))
+        return redirect(url_for('citizens.get_list'))
     return render_template('dashboard/citizen_profile.html', title=citizen.get('cnic'),
                            data=citizen, baf=baf, uaf=uaf, itf=itf)
 
@@ -63,7 +63,7 @@ def add_bank_account(_id: str):
     citizen: dict = get_citizen(ObjectId(_id))
     if citizen is None:
         flash(f'citizen not found by id: {_id}', 'danger')
-        return redirect(url_for('citizens.list'))
+        return redirect(url_for('citizens.get_list'))
 
     if baf.is_submitted():
         bank = get_bank(ObjectId(baf.bank_id.data))
@@ -90,7 +90,7 @@ def remove_bank_account(_id: str):
     citizen: dict = get_citizen(ObjectId(_id))
     if citizen is None:
         flash(f'citizen not found by id: {_id}', 'danger')
-        return redirect(url_for('citizens.list'))
+        return redirect(url_for('citizens.get_list'))
 
     bank_accounts = citizen.get('bank_accounts')
     # print(f'ba: {bank_accounts}')

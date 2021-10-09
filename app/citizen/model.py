@@ -1,5 +1,3 @@
-import random
-
 from bson import ObjectId
 from flask_wtf import FlaskForm
 from pymongo import ASCENDING
@@ -122,12 +120,12 @@ def citizens_list(offset=0, limit=0):
     }
 
 
-def get_citizen(id: ObjectId):
-    return mongo.db.citizens.find_one({"_id": id})
+def get_citizen(_id: ObjectId):
+    return mongo.db.citizens.find_one({"_id": _id})
 
 
-def add_citizen_bank_accounts(id: ObjectId, bank_accounts):
-    return mongo.db.citizens.update({"_id": id}, {
+def add_citizen_bank_accounts(_id: ObjectId, bank_accounts):
+    return mongo.db.citizens.update({"_id": _id}, {
         "$set": {
             "bank_accounts": bank_accounts
         }

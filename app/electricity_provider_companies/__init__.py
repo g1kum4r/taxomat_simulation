@@ -10,7 +10,7 @@ bp = Blueprint('electricity_provider_companies', __name__, url_prefix='/electric
 
 @bp.route('', methods=['GET'])
 @login_required
-def list():
+def get_list():
     args = request.args
     limit = args.get('limit', type=int, default=20)
     page = args.get('page', type=int, default=1)
@@ -21,49 +21,49 @@ def list():
         page = 1
 
     data = epc_list(offset, limit)
-    return render_template('dashboard/electricity_provider_companies.html', title='Electricity Provider Companies', data=data, page=page)
+    return render_template('dashboard/electricity_provider_companies.html',
+                           title='Electricity Provider Companies', data=data, page=page)
 
 
 @bp.route('/form', methods=['GET', 'POST'])
-@bp.route('/form/<string:id>', methods=['GET', 'POST'])
+@bp.route('/form/<string:_id>', methods=['GET', 'POST'])
 @login_required
-def form(id: str = None):
-    form = EPCForm()
+def form(_id: str = None):
+    _form = EPCForm()
 
-    if id is None:
+    if _id is None:
         title = 'Add Electricity Provider Company'
     else:
         title = 'Edit Electricity Provider Company'
-        epc = get_epc(ObjectId(id))
+        epc = get_epc(ObjectId(_id))
         # print(f'bank: {bank}')
         if epc is not None:
-            if not form.is_submitted():
-                form.name.data = epc.get('name')
-                form.code.data = epc.get('code')
+            if not _form.is_submitted():
+                _form.name.data = epc.get('name')
+                _form.code.data = epc.get('code')
         else:
-            flash(f'Electricity Provider Company not found by id {id}', 'danger')
+            flash(f'Electricity Provider Company not found by _id {_id}', 'danger')
 
-    if form.validate_on_submit():
-        result = save_epc(form.name.data, form.code.data, ObjectId(id) if id is not None else None)
+    if _form.validate_on_submit():
+        result = save_epc(_form.name.data, _form.code.data, ObjectId(_id) if _id is not None else None)
         if result is not None:
-            flash(f'{form.name.data} Saved', 'success')
-            return redirect(url_for('electricity_provider_companies.list'))
+            flash(f'{_form.name.data} Saved', 'success')
+            return redirect(url_for('electricity_provider_companies.get_list'))
 
-    return render_template('dashboard/electricity_provider_companies_form.html', title=title, form=form)
+    return render_template('dashboard/electricity_provider_companies_form.html', title=title, form=_form)
 
 
-@bp.route('/delete/<string:id>', methods=['GET'])
+@bp.route('/delete/<string:_id>', methods=['GET'])
 @login_required
-def delete(id: str = None):
-    bank = get_epc(ObjectId(id))
+def delete(_id: str = None):
+    bank = get_epc(ObjectId(_id))
     if bank is None:
-        flash(f'Electricity Provider Company not found by id: {id}', 'danger')
+        flash(f'Electricity Provider Company not found by _id: {_id}', 'danger')
     else:
-        result = delete_epc(ObjectId(id))
+        result = delete_epc(ObjectId(_id))
         if result is None:
-            flash(f'unknown result from mongodb {id}', 'danger')
+            flash(f'unknown result from mongodb {_id}', 'danger')
         else:
             flash(f'{bank.get("name")} deleted', 'success')
 
-    return redirect(url_for('electricity_provider_companies.list'))
-
+    return redirect(url_for('electricity_provider_companies.get_list'))

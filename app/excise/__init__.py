@@ -6,6 +6,6 @@ bp = Blueprint('excise', __name__, url_prefix='/excise')
 
 @bp.route('')
 @login_required
-def list():
+def get_list():
     return render_template('dashboard/excise.html', title='Excise')
 

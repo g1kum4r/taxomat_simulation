@@ -18,22 +18,22 @@ def sgc_list(offset=0, limit=0):
     }
 
 
-def save_sgc(name: str, code: str, id: ObjectId = None):
-    if id is None:
+def save_sgc(name: str, code: str, _id: ObjectId = None):
+    if _id is None:
         return mongo.db.sgc.insert_one({
             'name': name,
             'code': code
         })
     else:
-        return mongo.db.sgc.find_one_and_update({"_id": id}, {'$set': {
+        return mongo.db.sgc.find_one_and_update({"_id": _id}, {'$set': {
             "name": name,
             "code": code
         }})
 
 
-def get_sgc(id: ObjectId):
-    return mongo.db.sgc.find_one({"_id": id})
+def get_sgc(_id: ObjectId):
+    return mongo.db.sgc.find_one({"_id": _id})
 
 
-def delete_sgc(id: ObjectId):
-    return mongo.db.sgc.delete_one({"_id": id})
+def delete_sgc(_id: ObjectId):
+    return mongo.db.sgc.delete_one({"_id": _id})

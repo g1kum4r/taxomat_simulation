@@ -41,10 +41,10 @@
         {% if data.count > 0 %}
             <nav class="float-end">
               <ul class="pagination">
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=1) }}">First</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=page-1) }}">Previous</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=page+1) }}">Next</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=(data.count//20)) }}">Last</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=(data.count//20)) }}">Last</a></li>
               </ul>
             </nav>
         {% endif %}
@@ -80,10 +80,10 @@
         {% if data.count > 0 %}
             <nav class="float-end">
               <ul class="pagination">
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=1) }}">First</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=page-1) }}">Previous</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=page+1) }}">Next</a></li>
-                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.list', page=(data.count//20)) }}">Last</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=(data.count//20)) }}">Last</a></li>
               </ul>
             </nav>
         {% endif %}
