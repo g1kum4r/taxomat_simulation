@@ -1,7 +1,7 @@
-Flask
-Flask-Bcrypt
-Flask-Login
-Flask-PyMongo
-Flask-WTF
-email-validator
-python-dotenv
+Flask=2.0.2
+Flask-Bcrypt=0.7.1
+Flask-Login=0.5.0
+Flask-PyMongo[srv]=2.3.0
+Flask-WTF=0.15.1
+python-dotenv=0.19.0
+email-validator=1.1.3
