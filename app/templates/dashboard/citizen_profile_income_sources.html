@@ -1,0 +1,61 @@
+{% extends 'dashboard/citizen_profile.html' %}
+{% block tab_pane %}
+<div class="tab-pane fade show active" role="tabpanel" >
+    <h5>Add Income Source</h5>
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="POST">
+                <div class="row align-items-end mb-3">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ isf.type.label(class='form-label') }}
+                            {{ isf.type(class='form-control') }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ isf.employer_id.label(class='form-label') }}
+                            {{ isf.employer_id(class='form-control') }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ isf.dateFrom.label(class='form-label') }}
+                            {{ isf.dateFrom(class='form-control') }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ isf.dateTo.label(class='form-label') }}
+                            {{ isf.dateTo(class='form-control') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ isf.submit(class='btn btn-dark float-end') }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if data.income_sources %}
+    <br/>
+    <h5>Income Source List</h5>
+    {% endif %}
+    {% for i in data.income_sources %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">{{ i.employer_name }}</h5>
+            <p class="mb-1"><span class="fw-light">From:</span> <strong>{{ i.dateFrom }}</strong></p>
+            <p class="mb-1"><span class="fw-light">To:</span> <strong>{{ i.dateTo }}</strong></p>
+            <div class="float-end">
+                <a class="btn btn-light" href="{{ url_for('citizens.get_citizen_income_sources', _id=data._id, employement_id=i._id) }}">edit</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock tab_pane %}

@@ -1,0 +1,57 @@
+{% extends 'main.html'%}
+{% block body %}
+<body class="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{{url_for('dashboard.index')}}">Taxomat - Simulation</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('citizens.get_list') }}" href="{{url_for('citizens.get_list')}}">Citizen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('banks.get_list') }}" href="{{url_for('banks.get_list')}}">Banks</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.get_list') }}" href="{{url_for('excise.get_list')}}">Excise</a>-->
+<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('electricity_provider_companies.get_list') }}" href="{{url_for('electricity_provider_companies.get_list')}}">Electricity Provider Companies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.path ==  url_for('sui_gas_provider_companies.get_list') }}" href="{{url_for('sui_gas_provider_companies.get_list')}}">SUI Gas Provider Companies</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.get_list') }}" href="{{url_for('fuel_stations.get_list')}}">Fuel Stations</a>-->
+<!--                    </li>-->
+                </ul>
+                {% if current_user.is_authenticated %}
+                    <a class="btn btn-outline-light mx-md-2 my-sm-2" href="{{ url_for('profile.page') }}">{{ current_user.get_username() }}</a>
+                {% endif %}
+            </div>
+            <a class="btn btn-dark" href="{{ url_for('auth.logout') }}">Logout</a>
+
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row p-2">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message  in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% block content %}
+            <h2>Dasbhoard</h2>
+        {% endblock %}
+    </div>
+</body>
+{% endblock body %}

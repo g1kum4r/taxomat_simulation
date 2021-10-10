@@ -1,0 +1,92 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<div class="row p-2">
+    <div class="col">
+        <h2>Citizen</h2>
+    </div>
+</div>
+<div class="row p-2">
+    <div class="col card m-2">
+        <div class="card-body">
+            <div class="row justify-content-end">
+                <div class="col-md-6 px-0">
+                    <form method="POST">
+                        {{  form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    {{ form.start_from_cnic.label(class='form-label') }}
+                                    {{ form.start_from_cnic(class='form-control') }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    {{ form.range.label(class='form-label') }}
+                                    {{ form.range(class='form-control') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form.submit(class='btn btn-dark float-end') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row p-2">
+    <div class="col-md-6">
+        <p>total records: {{data.count}}</p>
+    </div>
+    <div class="col-md-6">
+        {% if data.count > 0 %}
+            <nav class="float-end">
+              <ul class="pagination">
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=(data.count//20)) }}">Last</a></li>
+              </ul>
+            </nav>
+        {% endif %}
+    </div>
+</div>
+<div class="row p-2">
+    <div class="col">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>CNIC</th>
+                    <th>NTN</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data.list %}
+                <tr>
+                    <td>
+                        <a class="text-decoration-none" href="{{ url_for('citizens.get', _id=d._id) }}">{{d.cnic}}</a>
+                    </td>
+                    <td>{{d.ntn}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row p-2">
+    <div class="col-md-6">
+        <p>total records: {{data.count}}</p>
+    </div>
+    <div class="col-md-6">
+        {% if data.count > 0 %}
+            <nav class="float-end">
+              <ul class="pagination">
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=1) }}">First</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page-1) }}">Previous</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=page+1) }}">Next</a></li>
+                  <li class="page-item"><a class="page-link bg-outline-dark text-dark" href="{{ url_for('citizens.get_list', page=(data.count//20)) }}">Last</a></li>
+              </ul>
+            </nav>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
