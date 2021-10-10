@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, url_for
 from flask_login import login_required
 from werkzeug.utils import redirect
 
-from app.business.model import BusinessForm, business_list, get_business, save_business, delete_business
+from app.business.model import BusinessForm, business_paginate_list, get_business, save_business, delete_business
 
 bp = Blueprint('business', __name__, url_prefix='/business')
 
@@ -20,7 +20,7 @@ def get_list():
     else:
         page = 1
 
-    data = business_list(offset, limit)
+    data = business_paginate_list(offset, limit)
     return render_template('dashboard/business.html', title='Business', data=data, page=page)
 
 

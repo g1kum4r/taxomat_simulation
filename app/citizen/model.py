@@ -1,12 +1,12 @@
 from bson import ObjectId
 from flask_wtf import FlaskForm
 from pymongo import ASCENDING
-from pymongo.command_cursor import CommandCursor
 from wtforms import SubmitField, StringField, SelectField
-from wtforms.fields.html5 import IntegerField
+from wtforms.fields.html5 import IntegerField, DateField
 from wtforms.validators import Required
 
 from app import mongo
+from app.business.model import business_list
 
 
 class CitizenGenerateForm(FlaskForm):
@@ -56,13 +56,20 @@ def get_utility_provider():
 class UtilityAccountForm(FlaskForm):
     provider_id = SelectField('Provider', validators=[Required()], choices=get_utility_provider())
     consumer_no = StringField('Consumer No')
-    meter_no = StringField('Consumer No')
+    meter_no = StringField('Meter No')
     submit = SubmitField('Save')
 
 
-class IncomeTaxForm(FlaskForm):
-    type = StringField('Type')
-    employer_id = StringField('Employer', validators=[Required()])
+def get_business_lookup(ntn: str):
+    return [(x.get('_id'), x.get('title')) for x in business_list(ntn)]
+
+
+class IncomeSourceForm(FlaskForm):
+
+    type = SelectField('Type', choices=['Contract', 'Salaried'])
+    employer_id = SelectField('Employer')
+    dateFrom = DateField('From')
+    dateTo = DateField('To')
     submit = SubmitField('Save')
 
 
@@ -225,7 +232,7 @@ def get_citizen_with_business(_id: ObjectId):
     ]).next()
 
 
-def add_citizen_bank_accounts(_id: ObjectId, bank_accounts):
+def update_citizen_bank_accounts(_id: ObjectId, bank_accounts):
     return mongo.db.citizens.update({"_id": _id}, {
         "$set": {
             "bank_accounts": bank_accounts
@@ -233,7 +240,7 @@ def add_citizen_bank_accounts(_id: ObjectId, bank_accounts):
     })
 
 
-def add_citizen_business(_id: ObjectId, business_list: []):
+def update_citizen_business(_id: ObjectId, business_list: []):
     return mongo.db.citizens.update({"_id": _id}, {
         "$set": {
             "business": business_list
@@ -241,9 +248,17 @@ def add_citizen_business(_id: ObjectId, business_list: []):
     })
 
 
-def add_citizen_utilities(_id: ObjectId, utilities: []):
+def update_citizen_utilities(_id: ObjectId, utilities: []):
     return mongo.db.citizens.update({"_id": _id}, {
         "$set": {
             "utilities": utilities
+        }
+    })
+
+
+def update_citizen_income_sources(_id: ObjectId, income_sources: []):
+    return mongo.db.citizens.update({"_id": _id}, {
+        "$set": {
+            "income_sources": income_sources
         }
     })

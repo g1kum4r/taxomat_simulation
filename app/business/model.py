@@ -13,11 +13,15 @@ class BusinessForm(FlaskForm):
     submit = SubmitField('Save')
 
 
-def business_list(offset=0, limit=0):
+def business_paginate_list(offset=0, limit=0):
     return {
         'count': mongo.db.business.count(),
         'list': mongo.db.business.find().skip(offset).limit(limit)
     }
+
+
+def business_list(ntn: str):
+    return mongo.db.business.find({"ntn": {"$ne": ntn}})
 
 
 def save_business(ntn: str, registration_no: str, title: str, code: str, _id: ObjectId = None):

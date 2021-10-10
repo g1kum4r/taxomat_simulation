@@ -11,11 +11,11 @@
 <div class="row p-2">
     <div class="col-md-3">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link {{ 'active' if business }}" type="button" role="tab" href="{{ url_for('citizens.get_citizen_business', _id=data._id) }}">Business</a>
-            <a class="nav-link {{ 'active' if income_sources }}" type="button" role="tab">Income Sources</a>
-            <a class="nav-link {{ 'active' if bank_accounts }}" type="button" role="tab" href="{{ url_for('citizens.get_citizen_bank_accounts', _id=data._id) }}">Bank Accounts</a>
+            <a class="nav-link {{ 'active' if business }}" href="{{ url_for('citizens.get_citizen_business', _id=data._id) }}" type="button" role="tab" >Business</a>
+            <a class="nav-link {{ 'active' if income_sources }}" href="{{ url_for('citizens.get_citizen_income_sources', _id=data._id) }}" type="button" role="tab" >Income Sources</a>
+            <a class="nav-link {{ 'active' if bank_accounts }}" href="{{ url_for('citizens.get_citizen_bank_accounts', _id=data._id) }}" type="button" role="tab" >Bank Accounts</a>
             <a class="nav-link {{ 'active' if utilities }}" href="{{ url_for('citizens.get_citizen_utilities', _id=data._id) }}" type="button" role="tab" >Utilities</a>
-            <a class="nav-link {{ 'active' if wht }}" type="button" role="tab">WHT</a>
+<!--            <a class="nav-link {{ 'active' if wht }}" type="button" role="tab">WHT</a>-->
         </div>
     </div>
     <div class="col-md-9">

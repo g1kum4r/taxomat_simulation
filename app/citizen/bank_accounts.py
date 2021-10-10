@@ -7,7 +7,7 @@ from werkzeug.utils import redirect
 
 from app.bank import get_bank
 from app.citizen import bp
-from app.citizen.model import BankAccountForm, get_citizen, add_citizen_bank_accounts
+from app.citizen.model import BankAccountForm, get_citizen, update_citizen_bank_accounts
 
 
 @bp.route('/<string:_id>/bank_accounts', methods=['GET', 'POST'])
@@ -31,7 +31,7 @@ def get_citizen_bank_accounts(_id: str):
             bank.update({'iban': iban})
             bank_accounts = citizen.get('bank_accounts')
             bank_accounts.append(bank)
-            add_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
+            update_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
     else:
         print('not submitted')
     return render_template('dashboard/citizen_profile_bank_accounts.html', title=citizen.get('cnic'),
@@ -60,14 +60,14 @@ def get_citizen_bank_accounts(_id: str):
 #             bank.update({'iban': baf.iban.data})
 #             bank_accounts = citizen.get('bank_accounts')
 #             bank_accounts.append(bank)
-#             add_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
+#             update_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
 #     else:
 #         print('not submitted')
 #
 #     return redirect(url_for('citizens.get', _id=_id))
 
 
-@bp.route('/remove_bank_account/<string:_id>', methods=['GET'])
+@bp.route('/<string:_id>/bank_accounts/delete', methods=['GET'])
 @login_required
 def remove_bank_account(_id: str):
     iban = request.args.get('iban', type=str)
@@ -81,6 +81,6 @@ def remove_bank_account(_id: str):
     # print(f'ba: {bank_accounts}')
     bank_accounts = [b for b in bank_accounts if str(b.get('iban')) != iban]
     # print(f'ba: {bank_accounts}')
-    add_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
+    update_citizen_bank_accounts(citizen.get('_id'), bank_accounts)
 
     return redirect(url_for('citizens.get_citizen_bank_accounts', _id=_id))

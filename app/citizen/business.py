@@ -8,7 +8,7 @@ from werkzeug.utils import redirect
 
 from app.business import save_business, BusinessForm, delete_business
 from app.citizen import bp
-from app.citizen.model import get_citizen, add_citizen_business, get_citizen_with_business
+from app.citizen.model import get_citizen, update_citizen_business, get_citizen_with_business
 
 
 @bp.route('/<string:_id>/business', methods=['GET', 'POST'])
@@ -34,7 +34,7 @@ def get_citizen_business(_id: str):
             if business_list is None:
                 business_list = []
             business_list.append(result.inserted_id)
-            add_citizen_business(ObjectId(_id), business_list)
+            update_citizen_business(ObjectId(_id), business_list)
             citizen = get_citizen_with_business(ObjectId(_id))
 
     return render_template('dashboard/citizen_profile_business.html', title=citizen.get('cnic'),
@@ -52,5 +52,5 @@ def remove_citizen_business(_id: str):
     business_id = ObjectId(request.args.get("business_id"))
     delete_business(ObjectId(business_id))
     business = [b for b in citizen.get('business') if b != business_id]
-    add_citizen_business(ObjectId(_id), business)
+    update_citizen_business(ObjectId(_id), business)
     return redirect(url_for('citizens.get_citizen_business', _id=_id))
