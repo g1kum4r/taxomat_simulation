@@ -37,5 +37,5 @@ def get_bank(_id: ObjectId):
     return mongo.db.banks.find_one({"_id": _id})
 
 
-def delete_bank(id: ObjectId):
-    return mongo.db.banks.delete_one({"_id": id})
+def delete_bank(_id: ObjectId):
+    return mongo.db.banks.delete_one({"_id": _id})
