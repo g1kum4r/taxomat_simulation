@@ -1,7 +1,8 @@
 Flask
 Flask-Bcrypt
 Flask-Login
-Flask-PyMongo[srv]
+Flask-PyMongo
+pymongo[srv]
 Flask-WTF
 python-dotenv
 email-validator
