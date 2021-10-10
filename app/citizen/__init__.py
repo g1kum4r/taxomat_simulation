@@ -1,5 +1,3 @@
-import random
-
 from bson import ObjectId
 from flask import request, flash, render_template, Blueprint, url_for
 from flask_login import login_required
@@ -8,7 +6,7 @@ from werkzeug.utils import redirect
 
 from app.business import BusinessForm
 from app.citizen.model import citizens_list, generate_list, CitizenGenerateForm, get_citizen, BankAccountForm, \
-    UtilityAccountForm, IncomeTaxForm, add_citizen_bank_accounts
+    UtilityAccountForm, IncomeSourceForm, update_citizen_bank_accounts
 
 bp = Blueprint('citizens', __name__, url_prefix='/citizens')
 
@@ -42,15 +40,12 @@ def get_list():
 @bp.route('/<string:_id>', methods=['GET'])
 @login_required
 def get(_id: str):
-    uaf = UtilityAccountForm()
-    uaf.consumer_no.data = random.randint(1000000, 9999999)
-    itf = IncomeTaxForm()
     citizen = get_citizen(ObjectId(_id))
     if citizen is None:
         flash(f'citizen not found by id: {_id}', 'danger')
         return redirect(url_for('citizens.get_list'))
     return render_template('dashboard/citizen_profile.html', title=citizen.get('cnic'),
-                           data=citizen, uaf=uaf, itf=itf)
+                           data=citizen)
 
 
 @bp.route('/add_business', methods=['POST'])
@@ -61,6 +56,7 @@ def add_business():
         pass
 
 
-from app.citizen.bank_accounts import remove_bank_account, get_citizen_bank_accounts
-from app.citizen.business import get_citizen_business
-from app.citizen.utilities import get_citizen_utilities
+from app.citizen.bank_accounts import get_citizen_bank_accounts, remove_bank_account
+from app.citizen.business import get_citizen_business, update_citizen_business
+from app.citizen.utilities import get_citizen_utilities, update_citizen_utilities
+from app.citizen.income_source import get_citizen_income_sources, update_citizen_income_sources

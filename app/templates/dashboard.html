@@ -15,18 +15,18 @@
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path ==  url_for('banks.get_list') }}" href="{{url_for('banks.get_list')}}">Banks</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.get_list') }}" href="{{url_for('excise.get_list')}}">Excise</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link {{ 'active' if request.path ==  url_for('excise.get_list') }}" href="{{url_for('excise.get_list')}}">Excise</a>-->
+<!--                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path ==  url_for('electricity_provider_companies.get_list') }}" href="{{url_for('electricity_provider_companies.get_list')}}">Electricity Provider Companies</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ 'active' if request.path ==  url_for('sui_gas_provider_companies.get_list') }}" href="{{url_for('sui_gas_provider_companies.get_list')}}">SUI Gas Provider Companies</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.get_list') }}" href="{{url_for('fuel_stations.get_list')}}">Fuel Stations</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link {{ 'active' if request.path ==  url_for('fuel_stations.get_list') }}" href="{{url_for('fuel_stations.get_list')}}">Fuel Stations</a>-->
+<!--                    </li>-->
                 </ul>
                 {% if current_user.is_authenticated %}
                     <a class="btn btn-outline-light mx-md-2 my-sm-2" href="{{ url_for('profile.page') }}">{{ current_user.get_username() }}</a>
