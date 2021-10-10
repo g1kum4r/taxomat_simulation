@@ -36,13 +36,13 @@
             </thead>
             <tbody>
                 {% for d in data.list %}
-                <tr>
+                <tr class="align-middle">
                     <td>{{d.name}}</td>
                     <td>{{d.code}}</td>
                     <td class="">
                         <div class="d-flex gap-2 float-end">
-                            <a class="btn btn-outline-danger" href="{{ url_for('banks.delete', _id=d._id) }}">delete</a>
-                            <a class="btn btn-outline-dark" href="{{ url_for('banks.form', _id=d._id) }}">edit</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('banks.delete', _id=d._id) }}">delete</a>
+                            <a class="btn btn-sm btn-outline-dark" href="{{ url_for('banks.form', _id=d._id) }}">edit</a>
                         </div>
                     </td>
                 </tr>

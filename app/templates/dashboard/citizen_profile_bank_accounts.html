@@ -1,0 +1,46 @@
+{% extends 'dashboard/citizen_profile.html' %}
+{% block tab_pane %}
+<div class="tab-pane fade show active" role="tabpanel" >
+<!--    <h3>Bank Accounts</h3>-->
+<!--    <br/>-->
+    <h5>Add Bank Account</h5>
+    <div class="card mb-3">
+        <div class="card-body">
+<!--            <h5 class="card-title">Add Bank Account</h5>-->
+            <form class="" method="post" action="{{ url_for('citizens.get_citizen_bank_accounts', _id=data._id) }}">
+                <div class="row align-items-end justify-content-end mb-2">
+                    <div class="col-md-4">
+                        {{ baf.iban.label(class='form-label') }}
+                        {{ baf.iban(class='form-control') }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ baf.bank_id.label(class='form-label') }}
+                        {{ baf.bank_id(class='form-control') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ baf.submit(class='btn btn-dark float-end') }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if data.bank_accounts %}
+    <br/>
+    <h5>Bank Accounts List</h5>
+    {% endif %}
+    {% for ba in data.bank_accounts %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">{{ ba.name }}</h5>
+            <p><span class="fw-light">IBAN:</span> <strong>{{ ba.iban }}</strong></p>
+            <div class="float-end">
+                <a class="btn btn-outline-danger" href="{{ url_for('citizens.remove_bank_account', _id=data._id, iban=ba.iban) }}">delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock tab_pane %}

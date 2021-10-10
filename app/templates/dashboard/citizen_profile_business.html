@@ -1,0 +1,52 @@
+{% extends 'dashboard/citizen_profile.html' %}
+{% block tab_pane %}
+<div class="tab-pane fade show active" role="tabpanel" >
+<!--    <h3>Business</h3>-->
+    <h5>Add Business</h5>
+    <div class="card mb-3">
+        <div class="card-body">
+            <form class="" method="post" action="{{ url_for('citizens.get_citizen_business', _id=data._id) }}">
+                <div class="row align-items-end mb-2">
+                    <div class="col-md-3">
+                        {{ bf.ntn.label(class='form-label') }}
+                        {{ bf.ntn(class='form-control-plaintext') }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ bf.registration_no.label(class='form-label') }}
+                        {{ bf.registration_no(class='form-control') }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ bf.title.label(class='form-label') }}
+                        {{ bf.title(class='form-control') }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ bf.code.label(class='form-label') }}
+                        {{ bf.code(class='form-control') }}
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col">
+                        {{ bf.submit(class='btn btn-dark float-end') }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if data.business %}
+    <br/>
+    <h5>Business List</h5>
+    {% endif %}
+    {% for b in data._business %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">{{ b.title }}</h5>
+            <p class="mb-1"><span class="fw-light">Code:</span> <strong>{{ b.code }}</strong></p>
+            <p class="mb-1"><span class="fw-light">Registration No:</span> <strong>{{ b.registration_no }}</strong></p>
+            <div class="float-end">
+                <a class="btn btn-outline-danger" href="{{ url_for('citizens.remove_citizen_business', _id=data._id, business_id=b._id) }}">delete</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock tab_pane %}

@@ -2,50 +2,32 @@
 {% block content %}
 <div class="row p-2">
     <div class="col">
+        <small class="fw-light">CNIC</small>
         <h2>{{data.cnic}}</h2>
+        <small class="fw-light">NTN</small>
+        <h6>{{data.ntn}}</h6>
     </div>
 </div>
 <div class="row p-2">
     <div class="col-md-3">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-income-resources-tab" data-bs-toggle="pill" data-bs-target="#v-pills-income-resources" type="button" role="tab">Income Resources</a>
-            <a class="nav-link" id="v-pills-bank-accounts-tab" data-bs-toggle="pill" data-bs-target="#v-pills-bank-accounts" type="button" role="tab" >Bank Accounts</a>
-            <a class="nav-link" id="v-pills-utility-bills-tab" data-bs-toggle="pill" data-bs-target="#v-pills-utility-bills" type="button" role="tab" >Utility Bills</a>
-            <a class="nav-link" id="v-pills-wht-tab" data-bs-toggle="pill" data-bs-target="#v-pills-wht" type="button" role="tab">WHT</a>
+            <a class="nav-link {{ 'active' if business }}" type="button" role="tab" href="{{ url_for('citizens.get_citizen_business', _id=data._id) }}">Business</a>
+            <a class="nav-link {{ 'active' if income_sources }}" type="button" role="tab">Income Sources</a>
+            <a class="nav-link {{ 'active' if bank_accounts }}" type="button" role="tab" href="{{ url_for('citizens.get_citizen_bank_accounts', _id=data._id) }}">Bank Accounts</a>
+            <a class="nav-link {{ 'active' if utilities }}" href="{{ url_for('citizens.get_citizen_utilities', _id=data._id) }}" type="button" role="tab" >Utilities</a>
+            <a class="nav-link {{ 'active' if wht }}" type="button" role="tab">WHT</a>
         </div>
     </div>
-    <div class="col-md-9 tab-content" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="v-pills-income-resources" role="tabpanel" >IT</div>
-        <div class="tab-pane fade" id="v-pills-bank-accounts" role="tabpanel" >
-            <form class="mb-3" method="post" action="{{ url_for('citizens.add_bank_account', _id=data._id) }}">
-                <div class="row align-items-end">
-                    <div class="col-md-4">
-                        {{ baf.iban.label(class='form-label') }}
-                        {{ baf.iban(class='form-control') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ baf.bank_id.label(class='form-label') }}
-                        {{ baf.bank_id(class='form-control') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ baf.submit(class='btn btn-dark') }}
-                    </div>
-                </div>
-            </form>
-            {% for ba in data.bank_accounts %}
-            <div class="card mb-2">
-                <div class="card-body">
-                    <h5 class="card-title">{{ ba.name }}</h5>
-                    <p><span class="fw-light">IBAN:</span> <strong>{{ ba.iban }}</strong></p>
-                    <div class="float-end">
-                        <a class="btn btn-outline-danger" href="{{ url_for('citizens.remove_bank_account', _id=data._id, iban=ba.iban) }}">delete</a>
-                    </div>
+    <div class="col-md-9">
+        {% block tab_pane %}
+        <div class="tab-pane show fade">
+            <div class="card">
+                <div class="card-body align-middle p-5">
+                    <h1 class="display-1">Select any one category</h1>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        <div class="tab-pane fade" id="v-pills-utility-bills" role="tabpanel" >UB</div>
-        <div class="tab-pane fade" id="v-pills-wht" role="tabpanel" >WHT</div>
+        {% endblock tab_pane %}
     </div>
 </div>
 {% endblock content %}
